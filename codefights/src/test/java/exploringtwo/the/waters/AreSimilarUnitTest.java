@@ -2,7 +2,9 @@ package exploringtwo.the.waters;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,22 +59,31 @@ public class AreSimilarUnitTest {
 
 		boolean areEquals = Arrays.equals(a, b);
 
-		for (int i = 1; i < a.length && !areEquals; i++) {
+		List<Integer> aSwap = new ArrayList<>();
+		List<Integer> bSwap = new ArrayList<>();
 
-			for (int j = 0; j < a.length && !areEquals; j++) {
+		for (int i = 0; i < a.length && !areEquals; i++) {
 
-				if (j != i) {
-					int aux = a[i];
-					a[i] = a[j];
-					a[j] = aux;
-
-					areEquals = Arrays.equals(a, b);
-				}
-
+			if (a[i] != b[i]) {
+				aSwap.add(a[i]);
+				bSwap.add(b[i]);
 			}
 		}
 
+
+		if (aSwap.size() > 2)
+			areEquals = false;
+		else if (aSwap.size() == 2)
+			areEquals = aSwap.get(0).equals(bSwap.get(1)) && bSwap.get(0).equals(aSwap.get(1));
+
+
 		return areEquals;
+	}
+
+	void swapPair(int[] v, int i, int j) {
+		int aux = v[i];
+		v[i] = v[j];
+		v[j] = aux;
 	}
 
 
